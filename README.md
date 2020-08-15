@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://flutter.io/">
-    <img src="assets/images/dollarsense_logo.png" alt="Logo" width=72 height=72>
+    <img src="assets/images/dollarsense_logo.png" alt="Logo" height=72>
   </a>
 
   <h3 align="center">DollarSense</h3>
