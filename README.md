@@ -39,7 +39,7 @@ This is a normal flutter app. You should follow the instructions in the [officia
 
 ## Preview
 
-<img src="assets/images/screenshots/dollarsense.gif" alt="Demo" height=72>
+<img src="assets/images/screenshots/dollarsense.gif" alt="Demo">
 
 ### Firebase
 
