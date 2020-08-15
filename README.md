@@ -2,7 +2,10 @@
 
 An expense management application made with Flutter.
 
-<img src="assets/images/screenshots/dollarsense.gif" height="500px">
+<img src="assets/images/screenshots/dollarsense.gif">
+
+![GIF of DollarSense demo]
+(https://github.com/crystalcheong/DollarSense/blob/master/assets/images/screenshots/dollarsense.gif)
 
 <!-- ## Getting Started
 
