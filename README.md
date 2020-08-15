@@ -2,10 +2,12 @@
 
 An expense management application made with Flutter.
 
-<img src="assets/images/screenshots/dollarsense.gif">
 
-![GIF of DollarSense demo]
-(https://github.com/crystalcheong/DollarSense/blob/master/assets/images/screenshots/dollarsense.gif)
+
+First Header | Second Header
+------------ | -------------
+<img src="assets/images/screenshots/dollarsense.gif"> | Content from cell 2
+Content in the first column | Content in the second column
 
 <!-- ## Getting Started
 
