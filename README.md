@@ -11,8 +11,9 @@
     Base project made with :money_with_wings: on my mind . Contains CRUD, patterns, and much more!
     <br>
     <br>
-    <a href="https://github.com/Ismaestro/flutter-example-app/issues/new">Report bug</a>
+    <a href="https://github.com/crystalcheong/DollarSense/issues/new">Report bug</a>
     ·
-    <a href="https://github.com/Ismaestro/flutter-example-app/issues/new">Request feature</a>
+    <a href="https://github.com/crystalcheong/DollarSense/issues/new">Request feature</a>
   </p>
 </p>
+
