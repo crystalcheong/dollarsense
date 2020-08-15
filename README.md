@@ -6,7 +6,7 @@
   <h3 align="center">DollarSense</h3>
 
   <p align="center">
-    An expense management application where you can evaluate your spending habits,\nset monthly budgets and track your expenses
+    An expense management application where you can evaluate your spending habits, set monthly budgets and track your expenses
     <br>
     Base project made with :money_with_wings: on my mind . Contains CRUD, patterns, and much more!
     <br>
