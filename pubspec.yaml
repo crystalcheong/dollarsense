@@ -1,0 +1,92 @@
+name: DollarSense
+description: An expense management application made with Flutter.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # For authentication & DB storage
+  firebase_auth: ^0.16.1
+  cloud_firestore: ^0.13.7
+  firebase_storage: ^3.1.6
+
+  # For loading animations
+  flutter_spinkit: "^4.1.2"
+
+  # For state management
+  provider: ^3.1.0
+  shared_preferences: ^0.5.8
+  flutter_bloc: ^2.1.1
+
+  # Date
+  date_util: ^0.1.4
+
+  # URL hyperlinks
+  url_launcher: ^5.5.0
+
+  # Image Picker
+  image_picker: ^0.6.7+4
+
+  # For UI 
+  cupertino_icons: ^0.1.3
+  # flutter_screenutil: ^2.3.0
+  # animated_theme_switcher: ^1.0.5
+  line_awesome_flutter: ^1.0.1
+  # font_awesome_flutter: ^8.8.1
+  after_layout: ^1.0.7+2
+  clay_containers: ^0.2.2
+  bottom_navy_bar: ^5.4.0
+  carousel_slider: ^2.2.1
+  dropdownfield: ^1.0.3
+  percent_indicator: ^2.1.5
+  pie_chart: ^3.1.1
+  sk_onboarding_screen: ^1.0.1
+  
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.7.5
+  flutter_test:
+    sdk: flutter
+
+
+flutter_icons:
+  image_path: 'assets/images/logo_icon.png'
+  android: true
+  ios: true
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  # fonts:
+    # - family: SFProText
+    #   fonts:
+    #     - asset: assets/fonts/SF-Pro-Text-Thin.otf
+    #       weight: 100
+    #     - asset: assets/fonts/SF-Pro-Text-Regular.otf
+    #       weight: 400
+    #     - asset: assets/fonts/SF-Pro-Text-Medium.otf
+    #       weight: 500
+    #     - asset: assets/fonts/SF-Pro-Text-Bold.otf
+    #       weight: 700
+    # - family: Muli
+    #   fonts:        
+    #     - asset: assets/fonts/Muli-Regular.ttf
+    #     - asset: assets/fonts/Muli-SemiBold.ttf
+    #       weight: 600
+    # - family: TTNorms
+    #   fonts:        
+    #     - asset: assets/fonts/TTNorms-Regular.otf
+    #     - asset: assets/fonts/TTNorms-Medium.otf
+    #       weight: 500

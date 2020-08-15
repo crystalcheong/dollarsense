@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "141133457957",
+    "firebase_url": "https://dollar-sense.firebaseio.com",
+    "project_id": "dollar-sense",
+    "storage_bucket": "dollar-sense.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141133457957:android:c1bee5f0129617d7966dcc",
+        "android_client_info": {
+          "package_name": "com.crystalcheong.dollarsense"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141133457957-ne4mm8ibo6ivhp9nb909god1bf2r8dv8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvXlUJnCqpOzT8Y7TrQSrLJMzgstY-wwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "141133457957-ne4mm8ibo6ivhp9nb909god1bf2r8dv8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
