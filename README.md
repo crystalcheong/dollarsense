@@ -17,3 +17,38 @@
   </p>
 </p>
 
+## Table of contents
+
+- [Quick start](#quick-start)
+- [What's included](#whats-included)
+- [Bugs and feature requests](#bugs-and-feature-requests)
+- [Contributing](#contributing)
+- [Creators](#creators)
+- [Thanks](#thanks)
+- [Copyright and license](#copyright-and-license)
+
+## Quick start
+
+This is a normal flutter app. You should follow the instructions in the [official documentation](https://flutter.io/docs/get-started/install).
+
+## What's included
+
+* CRUD: create, update and remove transactions with Firebase!
+* Log in or sign up for a DollarSense account with FirebaseAuth
+* Intutive graphs for a clearer look at your expenses
+
+### Firebase
+
+This repo is using Firebase. We use Cloud Firestore and Cloud Storage to handle CRUD operations over the transactions and to store your profile images.
+
+## Creators
+
+**Crystal Cheong**
+
+- <https://github.com/crystalcheong>
+
+## Copyright and license
+
+Code and documentation Copyright 2020 Crystal Cheong.
+
+Enjoy :moneybag:
