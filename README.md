@@ -8,7 +8,7 @@
   <p align="center">
     An expense management application with Flutter that uses Firebase
     <br>
-    Base project made with much  :money_with_wings: on my mind . Contains CRUD, patterns, and much more!
+    Base project made with :money_with_wings: on my mind . Contains CRUD, patterns, and much more!
     <br>
     <br>
     <a href="https://github.com/Ismaestro/flutter-example-app/issues/new">Report bug</a>
