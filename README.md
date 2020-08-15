@@ -1,21 +1,20 @@
-# DollarSense
-
-An expense management application made with Flutter.
 
 
+<p align="center">
+  <a href="https://flutter.io/">
+    <img src="assets/images/dollarsense_logo.png" alt="Logo" width=72 height=72>
+  </a>
 
-<img src="assets/images/screenshots/dollarsense.gif"> | Content from cell 2
-Content in the first column | Content in the second column
+  <h3 align="center">DollarSense</h3>
 
-<!-- ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference. -->
+  <p align="center">
+    Example app with Flutter that uses Firebase
+    <br>
+    Base project made with much  :heart: . Contains CRUD, patterns, and much more!
+    <br>
+    <br>
+    <a href="https://github.com/Ismaestro/flutter-example-app/issues/new">Report bug</a>
+    ·
+    <a href="https://github.com/Ismaestro/flutter-example-app/issues/new">Request feature</a>
+  </p>
+</p>
