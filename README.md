@@ -4,8 +4,6 @@ An expense management application made with Flutter.
 
 
 
-First Header | Second Header
------------- | -------------
 <img src="assets/images/screenshots/dollarsense.gif"> | Content from cell 2
 Content in the first column | Content in the second column
 
