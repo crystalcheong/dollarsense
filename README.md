@@ -37,6 +37,10 @@ This is a normal flutter app. You should follow the instructions in the [officia
 * Log in or sign up for a DollarSense account with FirebaseAuth
 * Intutive graphs for a clearer look at your expenses
 
+## Preview
+
+<img src="assets/images/screenshots/dollarsense.gif" alt="Demo" height=72>
+
 ### Firebase
 
 This repo is using Firebase. We use Cloud Firestore and Cloud Storage to handle CRUD operations over the transactions and to store your profile images.
