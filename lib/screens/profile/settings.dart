@@ -86,7 +86,7 @@ class _SettingsState extends State<Settings> {
                       [
                         FlatButton(
                           child: Text("OK"),
-                          onPressed: () async => Navigator.of(globals.scaffoldKey.currentContext).pop(),
+                          onPressed: () async => Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false)
                         )
                       ]
                     ),

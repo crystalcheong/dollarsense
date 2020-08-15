@@ -114,7 +114,7 @@ class _SignUpState extends State<SignUp> {
                               validator: (val) => val.isEmpty ? 'Reenter your password' : ((val != password) ? 'Passwords do not match!' : null),
                               onChanged: (val){setState(() => cfmPassword = val);}, obscureText: true,
                               decoration: kFieldDecoration.copyWith(
-                                suffixIcon: (password.length < 6) ? Icon(null) : Icon(Icons.check, color: Color(0xff084ca8), size: 24,),
+                                suffixIcon: (cfmPassword.length < 6) ? Icon(null) : Icon(Icons.check, color: Color(0xff084ca8), size: 24,),
                                 hintText: 'Confirm Password', hintStyle: TextStyle(color: Color(0xffbec2c3)),
                               )
                             ),
