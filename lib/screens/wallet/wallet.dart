@@ -29,86 +29,6 @@ class _WalletState extends State<Wallet> {
     
     print("WALLET SIZE : ${wallet.length}");
 
-  //   ///BODY CONTENT 
-  //   return (globals.wallet.length > 0)
-
-  //   ? Column(
-  //   crossAxisAlignment: CrossAxisAlignment.center,
-  //   children: <Widget>[
-
-  //     Center(child: Text("Wallet", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 28), textAlign: TextAlign.center,)),
-  //     SizedBox(height: 20,),
-
-  //     Stack(
-  //       children: <Widget>[
-
-  //         CarouselSlider.builder(
-  //           options: CarouselOptions(
-  //             // height: 240,
-  //             aspectRatio: 16 / 9,
-  //             viewportFraction: 0.8,
-  //             initialPage: _cardIndex,
-  //             enlargeCenterPage: true,
-  //             onPageChanged: (index, reason) async {
-  //               setState(() {
-  //                 _cardIndex = index;
-  //                 if(index < wallet.length){ print("Selected index : $index"); }
-  //                 else{ print("Index $index is BLANK"); }
-  //               });
-  //             },
-  //           ),
-  //           itemCount: wallet.length + 1, //6 cards + 1 blank
-  //           itemBuilder: (BuildContext context, int index){
-  //             if(index >=0 && index < wallet.length){
-  //               return CreditCard(bankCard: wallet[index]);
-  //             }
-  //             else{
-  //               return GestureDetector(
-  //                 onTap: () => showAddBankCard(context, userData.uid),
-  //                 child: BlankCard()
-  //               );
-  //             }
-  //           }
-  //         ),
-  //       ],
-  //     ),
-  //     SizedBox(height: 20,),
-      
-  //     (_cardIndex < wallet.length)
-  //     ? displayTransactions( wallet[_cardIndex].cardNumber)
-  //     : Container()
-
-  //   ],
-  // )
-
-  // : Stack(
-  //     children: <Widget>[
-
-  //       Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: <Widget>[
-  //           Center(child: Text("Wallet", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 28), textAlign: TextAlign.center,)),
-  //           SizedBox(height: 20,),
-  //           Expanded(child: Center(child: Text("Wallet is empty right now"),)),
-  //         ],
-  //       ),
-
-  //       Positioned(
-  //         bottom: 10.0 * 2,
-  //         left: 0,
-  //         right: 0,
-  //         child: FloatingActionButton(
-  //           backgroundColor: Color(0xFF768cfc),
-  //           child: const Icon(Icons.add),
-  //           onPressed: () => showAddBankCard(context, userData.uid)
-  //         )
-  //       ),
-
-  //     ],
-  //   );
-
-
-
     ///BODY CONTENT 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -190,5 +110,7 @@ class _WalletState extends State<Wallet> {
 }
 
 Widget displayTransactions(String cardNumber){
+  print("CARD NUMBER = $cardNumber");
+  print(globals.transactions.where((t) => t.cardNumber == cardNumber).toList());
   return Expanded( child: TransactionList(transactions: globals.transactions.where((t) => t.cardNumber == cardNumber).toList()) );
 }

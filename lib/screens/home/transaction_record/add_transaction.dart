@@ -82,7 +82,7 @@ class _AddTransactionState extends State<AddTransaction> {
 
     //Extract all card numbers for dropdown
     wallet.forEach((card) {
-      cards.add(card.cardNumber.replaceAll(RegExp(r'\d(?!\d{0,4}$)'), '*'));
+      cards.add(card.cardNumber);
     });
 
     //Set default card number choice for dropdown
