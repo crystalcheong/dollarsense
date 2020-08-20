@@ -29,7 +29,7 @@
 
 This is a normal flutter app. You should follow the instructions in the [official documentation](https://flutter.io/docs/get-started/install).
 
-:iphone: Try it on an Android device [here](https://drive.google.com/file/d/1v1mHMYRTz0zU5S3ZPYIizpodcyGk3esw/view?usp=sharing)! 
+:iphone: Try it on an Android device [here](https://drive.google.com/file/d/1jHZbivqgQrnDWQArcdR5y-hWsptvaHRI/view?usp=sharing)! 
 
 ## What's included
 
