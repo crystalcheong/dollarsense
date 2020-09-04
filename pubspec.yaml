@@ -12,10 +12,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # FlutterFire core
+  firebase_core: ^0.5.0
+
   # For authentication & DB storage
-  firebase_auth: ^0.16.1
-  cloud_firestore: ^0.13.7
-  firebase_storage: ^3.1.6
+  firebase_auth: ^0.18.0+1
+  cloud_firestore: ^0.14.0+2
+  firebase_storage: ^4.0.0
 
   # For loading animations
   flutter_spinkit: "^4.1.2"
