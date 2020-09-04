@@ -393,15 +393,15 @@ class _EditTransactionState extends State<EditTransaction> {
                                         },
                                       );
 
-                                      // set up the button
-                                      Widget okButton = FlatButton(
-                                        child: Text("OK"),
-                                        onPressed: () async {
-                                          Navigator.of(globals
-                                                  .scaffoldKey.currentContext)
-                                              .pop();
-                                        },
-                                      );
+                                      // // set up the button
+                                      // Widget okButton = FlatButton(
+                                      //   child: Text("OK"),
+                                      //   onPressed: () async {
+                                      //     Navigator.of(globals
+                                      //             .scaffoldKey.currentContext)
+                                      //         .pop();
+                                      //   },
+                                      // );
 
                                       // set up the button
                                       Widget deleteButton = FlatButton(

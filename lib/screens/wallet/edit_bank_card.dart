@@ -53,7 +53,7 @@ class _EditBankCardState extends State<EditBankCard> {
       context: context,
       initialDate: _expiry == null ? DateTime.now() : _expiry,
       firstDate: DateTime(2019),
-      lastDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 1825)), //Add 5 years
     ).then((pickedDate) {
       if (pickedDate == null) {
         return;
