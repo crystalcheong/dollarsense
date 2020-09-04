@@ -16,21 +16,19 @@ void main() {
     Future<SharedPreferences> sharedPrefs = SharedPreferences.getInstance();
     sharedPrefs.then((prefs) {
       var initialLoad = prefs.getBool('initialLoad') ?? true;
-      if(initialLoad) prefs.setBool('initialLoad', initialLoad);
+      if (initialLoad) prefs.setBool('initialLoad', initialLoad);
       runApp(DollarSense(sharedPrefs: prefs));
     });
   });
 }
 
 class DollarSense extends StatelessWidget {
-
   final SharedPreferences sharedPrefs;
   DollarSense({this.sharedPrefs});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     //Restrict portrait mode only
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -38,7 +36,7 @@ class DollarSense extends StatelessWidget {
     ]);
 
     // Retrieve User object from stream
-    return StreamProvider<User>.value(
+    return StreamProvider<CurrentUser>.value(
       value: AuthService().user,
 
       //Application
@@ -46,7 +44,6 @@ class DollarSense extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: Wrapper(sharedPrefs),
       ),
-
     );
   }
 }

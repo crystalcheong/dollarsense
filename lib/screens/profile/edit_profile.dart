@@ -8,7 +8,7 @@ import '../../shared/notification/alert_notification.dart';
 import '../../shared/theme.dart';
 import '../../data/globals.dart' as globals;
 
-showEditProfile(BuildContext context, UserData userData){
+showEditProfile(BuildContext context, UserData userData) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -17,31 +17,28 @@ showEditProfile(BuildContext context, UserData userData){
     ),
     backgroundColor: Colors.white,
     builder: (context) => Container(
-      height: MediaQuery.of(context).size.height * 0.80,
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-      child: EditProfile(userData: userData)
-    ),
+        height: MediaQuery.of(context).size.height * 0.80,
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+        child: EditProfile(userData: userData)),
   );
 }
 
 class EditProfile extends StatefulWidget {
-
   final UserData userData;
 
   ///CONSTRUCTOR
-  EditProfile({ this.userData });
+  EditProfile({this.userData});
 
   @override
   _EditProfileState createState() => _EditProfileState();
 }
 
 class _EditProfileState extends State<EditProfile> {
-
-    //[1] Initialise an instance of the AuthService object from services/auth.dart
+  //[1] Initialise an instance of the AuthService object from services/auth.dart
   final AuthService _auth = AuthService();
-  
+
   //For form validation
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
 
   //Track form value
   String _currentFullName = '';
@@ -56,191 +53,234 @@ class _EditProfileState extends State<EditProfile> {
 
     _currentFullName = widget.userData.fullName;
     _currentEmail = widget.userData.email;
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     OverlayEntry entry;
 
-    return loading ? Loading() : Column(
-      children: <Widget>[
-        Text('Update Details', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+    return loading
+        ? Loading()
+        : Column(
+            children: <Widget>[
+              Text(
+                'Update Details',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        //FULL NAME FIELD
+                        FormInput(
+                          hintText: 'Full Name',
+                          color: kDarkSecondary,
+                          initialVal: _currentFullName,
+                          valHandler: (val) =>
+                              val.isEmpty ? 'Enter your name' : null,
+                          changeHandler: (val) =>
+                              setState(() => _currentFullName = val),
+                        ),
 
-        SizedBox(height: 20,),
+                        //EMAIL ADDRESS FIELD
+                        FormInput(
+                          hintText: 'Email',
+                          color: kDarkSecondary,
+                          initialVal: _currentEmail,
+                          valHandler: (val) =>
+                              val.isEmpty ? 'Enter an email' : null,
+                          changeHandler: (val) =>
+                              setState(() => _currentEmail = val),
+                        ),
 
-        Expanded(
-          child: Form(key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
+                        //SUBMIT BUTTON
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          child: FullButton(
+                              icon: Icons.save,
+                              text: "Save Changes",
+                              color: kDarkSecondary,
+                              handler: () async {
+                                print("Name entered: $_currentFullName");
+                                print("Email entered: $_currentEmail");
 
-                  //FULL NAME FIELD
-                  FormInput(
-                    hintText: 'Full Name',
-                    color: kDarkSecondary,
-                    initialVal: _currentFullName,
-                    valHandler: (val) => val.isEmpty ? 'Enter your name' : null,
-                    changeHandler: (val) => setState(() => _currentFullName = val),
-                  ),
-                  
+                                Widget okButton = FlatButton(
+                                  child: Text("OK"),
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                );
 
-                  //EMAIL ADDRESS FIELD
-                  FormInput(
-                    hintText: 'Email',
-                    color: kDarkSecondary,
-                    initialVal: _currentEmail,
-                    valHandler: (val) => val.isEmpty ? 'Enter an email' : null,
-                    changeHandler: (val) => setState(() => _currentEmail = val),
-                  ),
+                                //NO CHANGES MADE
+                                if (_currentFullName ==
+                                        widget.userData.fullName &&
+                                    _currentEmail == widget.userData.email) {
+                                  entry = alertOverlay(AlertNotification(
+                                      text: 'No changes made',
+                                      color: Colors.deepPurple));
+                                  Navigator.of(
+                                          globals.scaffoldKey.currentContext)
+                                      .overlay
+                                      .insert(entry);
+                                  overlayDuration(entry);
+                                }
+                                //USERDATA CHANGES
+                                else if (_currentEmail ==
+                                    widget.userData.email) {
+                                  setState(() => loading = true);
 
-                  //SUBMIT BUTTON
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                    child: FullButton(
-                      icon: Icons.save,
-                      text: "Save Changes",
-                      color: kDarkSecondary,
-                      handler: () async {
-                        print("Name entered: ${_currentFullName}");
-                        print("Email entered: ${_currentEmail}");
+                                  await DatabaseService(
+                                          uid: globals.userData.uid)
+                                      .updateUserData(_currentFullName,
+                                          widget.userData.email,
+                                          avatar: globals.userData.avatar);
 
-                        Widget okButton = FlatButton(
-                          child: Text("OK"),
-                          onPressed: () async {                                 
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
-                        );
+                                  setState(() => loading = false);
 
-                        //NO CHANGES MADE
-                        if(_currentFullName == widget.userData.fullName && _currentEmail == widget.userData.email){
-                          entry = alertOverlay( 
-                            AlertNotification(text: 'No changes made', color: Colors.deepPurple)
-                          );
-                          Navigator.of(globals.scaffoldKey.currentContext).overlay.insert(entry);
-                          overlayDuration(entry);
-
-                        }
-                        //USERDATA CHANGES
-                        else if(_currentEmail == widget.userData.email){
-                          setState(() => loading = true);
-
-                          await DatabaseService(uid: globals.userData.uid).updateUserData(_currentFullName, widget.userData.email, avatar: globals.userData.avatar);
-
-                          setState(() => loading = false);
-
-                          showDialog(context: context,
-                            builder: (context) => dialog(
-                              "Update Success", 
-                              "Your profile was successfully updated.", 
-                              [
-                                okButton
-                              ]
-                            ),
-                          );
-                              
-                        }
-                        //FIREBASEAUTH CHANGES
-                        else{
-  
-                          Widget confirmButton = FlatButton(
-                            child: Text("Confirm".toUpperCase(), style: TextStyle(color: kDarkSecondary),),
-                            onPressed: () async { 
-                                Navigator.of(globals.scaffoldKey.currentContext).pop();
-
-                                print("Email provided: ${widget.userData.email}");
-                                print("Password entered: $_password");
-
-                                setState(() => loading = true);
-                                
-                                dynamic result = await _auth.updateUser(widget.userData, _password, _currentFullName, _currentEmail.trim());
-
-                                setState(() => loading = false);
-
-                                if(result == null){
-
-                                  showDialog(context: context,
+                                  showDialog(
+                                    context: context,
                                     builder: (context) => dialog(
-                                      "Update Error", 
-                                      "Your credentials were invalid.", 
-                                      [
-                                        okButton
-                                      ],
-                                      titleColor: Colors.red[400]
-                                    ),
+                                        "Update Success",
+                                        "Your profile was successfully updated.",
+                                        [okButton]),
                                   );
                                 }
-                                else{
-                                  showDialog(context: context,
-                                    builder: (context) => dialog(
-                                      "Update Success", 
-                                      "Your profile was successfully updated.", 
-                                      [
-                                        okButton
-                                      ]
+                                //FIREBASEAUTH CHANGES
+                                else {
+                                  Widget confirmButton = FlatButton(
+                                    child: Text(
+                                      "Confirm".toUpperCase(),
+                                      style: TextStyle(color: kDarkSecondary),
                                     ),
+                                    onPressed: () async {
+                                      Navigator.of(globals
+                                              .scaffoldKey.currentContext)
+                                          .pop();
+
+                                      print(
+                                          "Email provided: ${widget.userData.email}");
+                                      print("Password entered: $_password");
+
+                                      setState(() => loading = true);
+
+                                      dynamic result = await _auth.updateUser(
+                                          widget.userData,
+                                          _password,
+                                          _currentFullName,
+                                          _currentEmail.trim());
+
+                                      setState(() => loading = false);
+
+                                      if (result == null) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => dialog(
+                                              "Update Error",
+                                              "Your credentials were invalid.",
+                                              [okButton],
+                                              titleColor: Colors.red[400]),
+                                        );
+                                      } else {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => dialog(
+                                              "Update Success",
+                                              "Your profile was successfully updated.",
+                                              [okButton]),
+                                        );
+                                      }
+                                    },
                                   );
-                                }
-                            },
-                          );
 
-                          Widget cancelButton = FlatButton(
-                            child: Text("Cancel".toUpperCase()),
-                            onPressed:  () { Navigator.of(globals.scaffoldKey.currentContext).pop(); },
-                          );
+                                  Widget cancelButton = FlatButton(
+                                    child: Text("Cancel".toUpperCase()),
+                                    onPressed: () {
+                                      Navigator.of(globals
+                                              .scaffoldKey.currentContext)
+                                          .pop();
+                                    },
+                                  );
 
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                                contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 40),
-                                title: Text("Save Changes?", textAlign: TextAlign.center, style: TextStyle(color: kDarkSecondary, fontWeight: FontWeight.bold),),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text("Enter your password to confirm account changes.", textAlign: TextAlign.start,),
-
-                                      //Password field
-                                      Container(
-                                        // height: 60,
-                                        padding: const EdgeInsets.symmetric(vertical: 5),
-                                        child: TextFormField(
-                                          validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
-                                          onChanged: (val){setState(() => _password = val);}, 
-                                          obscureText: true,
-                                          decoration: kFieldDecoration.copyWith(
-                                            // suffixIcon: (password.length < 6) ? Icon(null) : Icon(Icons.check, color: primaryColor, size: 24,),
-                                            hintText: 'Password', hintStyle: TextStyle(color: Color(0xffbec2c3)),
-                                          )
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20.0))),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 10.0, horizontal: 40),
+                                        title: Text(
+                                          "Save Changes?",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: kDarkSecondary,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                      ),
-                                  ],
-                                ),
-                                actions: [
-                                  cancelButton,
-                                  confirmButton,
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      }
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            Text(
+                                              "Enter your password to confirm account changes.",
+                                              textAlign: TextAlign.start,
+                                            ),
+
+                                            //Password field
+                                            Container(
+                                              // height: 60,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 5),
+                                              child: TextFormField(
+                                                  validator: (val) => val
+                                                              .length <
+                                                          6
+                                                      ? 'Enter a password 6+ chars long'
+                                                      : null,
+                                                  onChanged: (val) {
+                                                    setState(
+                                                        () => _password = val);
+                                                  },
+                                                  obscureText: true,
+                                                  decoration:
+                                                      kFieldDecoration.copyWith(
+                                                    // suffixIcon: (password.length < 6) ? Icon(null) : Icon(Icons.check, color: primaryColor, size: 24,),
+                                                    hintText: 'Password',
+                                                    hintStyle: TextStyle(
+                                                        color:
+                                                            Color(0xffbec2c3)),
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
+                                        actions: [
+                                          cancelButton,
+                                          confirmButton,
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              }),
+                        ),
+
+                        ///Scrollable buffer
+                        Container(
+                            height: MediaQuery.of(context).size.height * 0.45),
+                      ],
                     ),
                   ),
-
-                  ///Scrollable buffer
-                  Container( height: MediaQuery.of(context).size.height * 0.45 ),
-                  
-                ],
-              ),
-            ),
-          ),
-        )
-      ],
-    );
+                ),
+              )
+            ],
+          );
   }
 }

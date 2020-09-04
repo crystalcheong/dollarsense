@@ -8,28 +8,27 @@ import '../screens/authenticate/authenticate.dart';
 import '../models/user.dart';
 
 class Wrapper extends StatelessWidget {
-
   final SharedPreferences sharedPrefs;
   Wrapper(this.sharedPrefs);
 
   @override
   Widget build(BuildContext context) {
-
     var initialLoad = sharedPrefs.getBool('initialLoad');
     print("PREFS RECEIVED FOR STATUS -> ${sharedPrefs.getBool('initialLoad')}");
 
     //Retrieve USER object from StreamProvider in main.dart
-    final user = Provider.of<User>(context);
+    final user = Provider.of<CurrentUser>(context);
     print(user);
 
-    if(initialLoad){
+    if (initialLoad) {
       return Onboard(sharedPrefs);
-    }
-    else{
+    } else {
       //Not logged in
-      if(user == null){ return Authenticate(); }
-      else{ return NavBarLayout(user: user); }
+      if (user == null) {
+        return Authenticate();
+      } else {
+        return NavBarLayout(user: user);
+      }
     }
-
   }
 }

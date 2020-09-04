@@ -1,18 +1,15 @@
-class User{
-
+class CurrentUser {
   final String uid;
 
   ///Constructor
-  User({ this.uid });
+  CurrentUser({this.uid});
 }
 
-class UserData{
-
+class UserData {
   final String uid;
   final String fullName;
   final String email;
   final String avatar;
 
-  UserData({ this.uid, this.fullName, this.email, this.avatar='' });
-
+  UserData({this.uid, this.fullName, this.email, this.avatar = ''});
 }

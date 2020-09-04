@@ -15,14 +15,13 @@ void launchMailClient() async {
   try {
     await launch(mailUrl);
   } catch (e) {
-    await copyMailClient(globals.scaffoldKey);
+    copyMailClient(globals.scaffoldKey);
   }
 }
 
-void copyMailClient(GlobalKey<ScaffoldState> key ) async {
-    await Clipboard.setData(new ClipboardData(text: kDevEmail));
-    key.currentState.showSnackBar(new SnackBar(
+void copyMailClient(GlobalKey<ScaffoldState> key) async {
+  await Clipboard.setData(new ClipboardData(text: kDevEmail));
+  key.currentState.showSnackBar(new SnackBar(
       backgroundColor: kDarkSecondary,
-      content: new Text("Copied to Clipboard")
-    ));
+      content: new Text("Copied to Clipboard")));
 }

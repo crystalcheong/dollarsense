@@ -7,7 +7,6 @@ import '../wrapper.dart';
 import '../../shared/theme.dart';
 
 class Onboard extends StatefulWidget {
-
   final SharedPreferences sharedPrefs;
   Onboard(this.sharedPrefs);
 
@@ -16,27 +15,27 @@ class Onboard extends StatefulWidget {
 }
 
 class _OnboardState extends State<Onboard> {
-
   bool showOnboard = true;
 
-  void toggleView(){
+  void toggleView() {
     //Toggles boolean value regardless of T/F
     setState(() => showOnboard = !showOnboard);
 
-    if(!showOnboard){
+    if (!showOnboard) {
       widget.sharedPrefs.setBool('initialLoad', false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if(showOnboard) return OnboardContent(toggleView: toggleView);
-    else return Wrapper(widget.sharedPrefs);
+    if (showOnboard)
+      return OnboardContent(toggleView: toggleView);
+    else
+      return Wrapper(widget.sharedPrefs);
   }
 }
 
 class OnboardContent extends StatelessWidget {
-
   final Function toggleView;
   OnboardContent({this.toggleView});
 
@@ -44,7 +43,7 @@ class OnboardContent extends StatelessWidget {
     SkOnboardingModel(
         title: 'TRACK EXPENSES',
         description:
-            'List down latest transactions ans set monthly budgets to keep track of your spending',
+            'List down latest transactions & set monthly budgets to keep track of your spending',
         titleColor: Colors.black,
         descripColor: const Color(0xFF929794),
         imagePath: 'assets/images/track_expenses.png'),
@@ -57,12 +56,13 @@ class OnboardContent extends StatelessWidget {
         imagePath: 'assets/images/allinone_finance.png'),
     SkOnboardingModel(
         title: 'INTUITIVE GRAPHS',
-        description: 'Visualize your monthly expenses to evalute and improve your spending habits',
+        description:
+            'Visualize your monthly expenses to evalute and improve your spending habits',
         titleColor: Colors.black,
         descripColor: const Color(0xFF929794),
         imagePath: 'assets/images/intuitive_graphs.png'),
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
