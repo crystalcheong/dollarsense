@@ -4,17 +4,16 @@ import 'package:bloc/bloc.dart';
 import 'dart:async';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
+import '../../services/database.dart';
 import '../loading.dart';
 import '../theme.dart';
 import '../../models/bank_card.dart';
-import '../../models/budget.dart';
 import '../../models/transaction_record.dart';
 import '../../models/user.dart';
 import '../../screens/home/home.dart';
 import '../../screens/profile/profile.dart';
 import '../../screens/statistics/statistics.dart';
 import '../../screens/wallet/wallet.dart';
-import '../../services/database.dart';
 import '../../data/globals.dart' as globals;
 
 enum NavigationEvents {
@@ -143,134 +142,89 @@ class NavBarLayout extends StatefulWidget {
 
 class _NavBarLayoutState extends State<NavBarLayout> {
   bool loading = true;
-  UserData userData;
-  List<dynamic> transactionList;
-  List<dynamic> wallet;
-  Budget budget;
 
-  //Subscriptions
-  var userSubscription,
-      transactionSubscription,
-      walletSubscription,
-      budgetSubscription;
+  StreamController streamController;
 
   @override
   void initState() {
+    streamController = StreamController.broadcast();
+    setupData();
     super.initState();
+  }
 
-    final userStream = DatabaseService(uid: widget.user.uid).userData;
-    print("Created the <USERDATA> stream");
-
-    userSubscription = userStream.listen((userData) async {
+  void setupData() async {
+    Stream stream = await DatabaseService(uid: widget.user.uid).createStreams()
+      ..asBroadcastStream();
+    stream.listen((data) {
       setState(() {
-        userData = userData;
-        // loading = false;
+        globals.userData = data[0];
+        globals.budget = data[1];
+
+        List<BankCard> cards = new List<BankCard>();
+        data[2].forEach((card) {
+          cards.add(new BankCard(
+            bankName: card['bankName'],
+            cardNumber: card['cardNumber'],
+            holderName: card['holderName'],
+            expiry: DateTime.parse(card['expiry'].toDate().toString()),
+          ));
+        });
+        //Only append the values not found in the existing global variable
+        globals.wallet =
+            cards.toSet().difference(globals.wallet.toSet()).toList();
+
+        List<TransactionRecord> transactions = new List<TransactionRecord>();
+        data[3].forEach((transaction) {
+          transactions.add(new TransactionRecord(
+              type: transaction['type'],
+              title: transaction['title'],
+              amount: double.parse(transaction['amount'].toString()),
+              date: DateTime.parse(transaction['date'].toDate().toString()),
+              cardNumber: transaction['cardNumber']));
+        });
+
+        //Only append the values not found in the existing global variable
+        globals.transactions = transactions
+            .toSet()
+            .difference(globals.transactions.toSet())
+            .toList();
+        globals.income =
+            (transactions.where((t) => t.type == "income").toList())
+                .fold(0, (i, j) => i + j.amount);
+        globals.expense =
+            (transactions.where((t) => t.type == "expense").toList())
+                .fold(0, (i, j) => i + j.amount);
+        globals.monthIncome = (transactions
+                .where((t) =>
+                    t.type == "income" && t.date.month == DateTime.now().month)
+                .toList())
+            .fold(0, (i, j) => i + j.amount);
+        globals.monthExpense = (transactions
+                .where((t) =>
+                    t.type == "expense" && t.date.month == DateTime.now().month)
+                .toList())
+            .fold(0, (i, j) => i + j.amount);
+        globals.monthTotal = globals.monthIncome + globals.monthExpense;
       });
-      print('UserData: $userData');
-      globals.userData = userData;
-      print("-globally- : ${globals.userData.fullName}");
-    });
 
-    final budgetStream = DatabaseService(uid: widget.user.uid).budget;
-    print("Created the <BUDGET> stream");
+      print("USER stream -> ${globals.userData.fullName}");
+      print("BUDGET stream -> ${globals.budget.month}th month");
+      print("WALLET stream -> ${globals.wallet.length} cards");
+      print("TRANSACTIONS stream -> ${globals.transactions.length} records");
+      print("~ end of init streams ~");
 
-    budgetSubscription = budgetStream.listen((budget) async {
       setState(() {
-        budget = budget;
-        // loading = false;
-      });
-      print('Budget: $budget');
-      globals.budget = budget;
-      print("-globally- : ${globals.budget.month}");
-    });
-
-    final transactionListStream =
-        DatabaseService(uid: widget.user.uid).transactionRecord;
-    print("Created the <LIST<TRANSACTION>> stream");
-
-    transactionSubscription = transactionListStream.listen((tList) async {
-      setState(() {
-        transactionList = tList;
-        // loading = false;
-      });
-      print('TList: $transactionList');
-
-      List<TransactionRecord> transactions = new List<TransactionRecord>();
-
-      transactionList.forEach((transaction) {
-        TransactionRecord tr = new TransactionRecord(
-            type: transaction['type'],
-            title: transaction['title'],
-            amount: double.parse(transaction['amount'].toString()),
-            date: DateTime.parse(transaction['date'].toDate().toString()),
-            cardNumber: transaction['cardNumber']);
-
-        print("TRANSACTION RECORD DETECTED: $tr");
-        transactions.add(tr);
-      });
-
-      //Only append the values not found in the existing global variable
-      globals.transactions = transactions
-          .toSet()
-          .difference(globals.transactions.toSet())
-          .toList();
-      globals.income = (transactions.where((t) => t.type == "income").toList())
-          .fold(0, (i, j) => i + j.amount);
-      globals.expense =
-          (transactions.where((t) => t.type == "expense").toList())
-              .fold(0, (i, j) => i + j.amount);
-      globals.monthIncome = (transactions
-              .where((t) =>
-                  t.type == "income" && t.date.month == DateTime.now().month)
-              .toList())
-          .fold(0, (i, j) => i + j.amount);
-      globals.monthExpense = (transactions
-              .where((t) =>
-                  t.type == "expense" && t.date.month == DateTime.now().month)
-              .toList())
-          .fold(0, (i, j) => i + j.amount);
-      globals.monthTotal = globals.monthIncome + globals.monthExpense;
-    });
-
-    final walletStream = DatabaseService(uid: widget.user.uid).wallet;
-    print("Created the <LIST<BANKCARD>> stream");
-
-    walletSubscription = walletStream.listen((wallet) async {
-      setState(() {
-        wallet = wallet;
         loading = false;
       });
-      print('Wallet: $wallet');
-
-      List<BankCard> cards = new List<BankCard>();
-
-      wallet.forEach((card) {
-        BankCard bc = new BankCard(
-          bankName: card['bankName'],
-          cardNumber: card['cardNumber'],
-          holderName: card['holderName'],
-          expiry: DateTime.parse(card['expiry'].toDate().toString()),
-        );
-
-        print("BANK CARD DETECTED: $bc");
-        cards.add(bc);
-      });
-
-      //Only append the values not found in the existing global variable
-      globals.wallet =
-          cards.toSet().difference(globals.wallet.toSet()).toList();
     });
-
-    print("-end of init-");
   }
 
   @override
   void dispose() {
-    userSubscription.cancel();
-    transactionSubscription.cancel();
-    walletSubscription.cancel();
-    budgetSubscription.cancel();
     super.dispose();
+    streamController?.close();
+    streamController = null;
+    print("STREAM CONTROLLER killed");
   }
 
   @override
@@ -289,7 +243,15 @@ class _NavBarLayoutState extends State<NavBarLayout> {
                 minimum: EdgeInsets.all(25),
                 child: BlocBuilder<NavigationBloc, NavigationStates>(
                     builder: (context, navigationState) {
+                  // return navigationState as Widget;
+
+                  setupData();
                   return navigationState as Widget;
+
+                  // return StreamBuilder(
+                  //   stream: streamController.stream,
+                  //   builder: (context, snapshot) => navigationState as Widget,
+                  // );
                 }),
               ),
 

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:async/async.dart';
 
 import '../models/bank_card.dart';
 import '../models/budget.dart';
@@ -195,5 +196,15 @@ class DatabaseService {
   List<dynamic> _walletFromSnapshot(DocumentSnapshot snapshot) {
     List<dynamic> wallet = snapshot.data()['wallet'];
     return wallet;
+  }
+
+  Future<Stream> createStreams() async {
+    Stream userData = DatabaseService(uid: uid).userData;
+    Stream budget = DatabaseService(uid: uid).budget;
+    Stream wallet = DatabaseService(uid: uid).wallet;
+    Stream transactionRecord = DatabaseService(uid: uid).transactionRecord;
+
+    return StreamZip([userData, budget, wallet, transactionRecord])
+        .asBroadcastStream();
   }
 }

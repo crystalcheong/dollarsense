@@ -9,9 +9,12 @@ class Loading extends StatelessWidget {
     return Container(
       color: kBackground,
       child: Center(
-        child: SpinKitFoldingCube(
-          color: kLightSecondary,
-          size: 50.0,
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: SpinKitFoldingCube(
+            color: kLightSecondary,
+            size: 50.0,
+          ),
         ),
       ),
     );
