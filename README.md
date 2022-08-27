@@ -52,13 +52,7 @@ This is a normal flutter app. You should follow the instructions in the [officia
 
 ### Firebase
 
-This repo is using Firebase. We use Cloud Firestore and Cloud Storage to handle CRUD operations over the transactions and to store your profile images.
-
-## Creators
-
-**Crystal Cheong**
-
-- <https://github.com/crystalcheong>
+This application uses Cloud Firestore and Cloud Storage to handle CRUD operations over the transactions and to store user's profile images.
 
 ## Copyright and license
 
